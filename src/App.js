@@ -6,9 +6,15 @@ function App() {
 
   const addTodo = () => {
     if (input) {
-      setTodos([...todos, input]);
+      setTodos([...todos, { text: input, completed: false }]);
       setInput('');
     }
+  };
+
+  const toggleComplete = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
   };
 
   return (
@@ -22,7 +28,13 @@ function App() {
       <button onClick={addTodo}>Add Todo</button>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index}>{todo}</li>
+          <li 
+            key={index} 
+            onClick={() => toggleComplete(index)}
+            style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+          >
+            {todo.text}
+          </li>
         ))}
       </ul>
     </div>
